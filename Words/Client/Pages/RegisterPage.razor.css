@@ -1,0 +1,56 @@
+﻿
+h1 {
+    font-family: 'Rubik Mono One', monospace;
+    letter-spacing: 5px;
+    font-size: 3.5rem;
+    font-style: italic;
+    text-align: center;
+    color: white;
+}
+
+hr {
+    height: 10px;
+    width: 100%;
+    background-color: #F0ECE5;
+    margin-bottom: 30px;
+    border-radius: 10px;
+}
+
+h2 {
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 2.2rem;
+}
+
+label {
+    font-size: 1.1rem;
+}
+
+.form-control {
+    color: #191D88;
+}
+
+.card-background {
+    width: min(25rem, 97%);
+    color: black;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.login-background {
+    border-radius: 20px;
+    background-color: #B6BBC4;
+    padding: 20px;
+    color: #161A30;
+}
+
+
+.form-background {
+    margin-top: 20px;
+}
+
+.flex-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-top: 100px;
+}
