@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Words.Server", "Words\Server\Words.Server.csproj", "{774A1BA9-FDD4-4FAF-80A8-4A73A6391C28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Words.Server", "Words\Server\Words.Server.csproj", "{774A1BA9-FDD4-4FAF-80A8-4A73A6391C28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Words.Client", "Words\Client\Words.Client.csproj", "{EC072012-FB1C-44C0-B7CF-DE3F2D87B029}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Words.Client", "Words\Client\Words.Client.csproj", "{EC072012-FB1C-44C0-B7CF-DE3F2D87B029}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Words.Shared", "Words\Shared\Words.Shared.csproj", "{9554A970-9AD2-44DB-B78C-124462E3C468}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Words.Shared", "Words\Shared\Words.Shared.csproj", "{9554A970-9AD2-44DB-B78C-124462E3C468}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

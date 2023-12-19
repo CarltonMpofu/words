@@ -1,0 +1,141 @@
+﻿
+.main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    /* height: 100vh; */
+    margin-top: 100px;
+}
+
+/* Logo plus the line */
+
+h1 {
+    font-family: 'Rubik Mono One', monospace;
+    letter-spacing: 5px;
+    font-size: 3.5rem;
+    font-style: italic;
+    text-align: center;
+    color: white;
+}
+
+hr {
+    height: 10px;
+    width: 34rem;
+    background-color: #F0ECE5;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+/* Add Word button */
+
+.btn {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+    color: #FFECD6;
+}
+
+/* Display the words with their definitions */
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 800px;
+}
+
+.word-card {
+    background-color: #fff;
+    border-radius: 8px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    padding: 20px;
+    margin: 10px;
+    width: 40%;
+    box-sizing: border-box;
+    transition: transform 0.2s ease-in-out;
+    /*overflow: hidden;  Ensure the background color doesn't extend beyond the border */
+    text-decoration: none; /* Remove default anchor underline */
+    /*color: inherit;  Inherit text color from parent */
+}
+
+.word-header {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px 8px 0 0; /* Rounded corners only at the top */
+    margin-bottom: 5px
+}
+
+.word-card:hover {
+    transform: scale(1.05);
+}
+
+h3 {
+    margin: 0;
+    font-size: 1.5em;
+    letter-spacing: 1px;
+}
+
+p {
+    margin: 0;
+    color: #666;
+}
+
+
+
+@media only screen and (max-width: 668px) {
+    body {
+        height: auto;
+    }
+
+
+    hr {
+        width: 85%;
+    }
+
+    a {
+        margin-bottom: 10px;
+    }
+
+    /* Display the words with their definitions */
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .word-card {
+        width: 60%;
+        margin-bottom: 20px;
+    }
+}
+
+@media only screen and (max-width: 518px) {
+    .word-card {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 428px) {
+    h1 {
+        font-size: 3.3rem;
+    }
+
+    hr {
+        width: 90%;
+    }
+
+    .btn {
+        font-size: 1rem;
+    }
+
+
+    .word-card {
+        width: 90%;
+    }
+
+    
+}
