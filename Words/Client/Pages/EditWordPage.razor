@@ -1,0 +1,25 @@
+﻿@page "/editwordpage"
+
+<div class="main">
+    <div class="main-div">
+        <h1>Words</h1>
+        <hr>
+
+        <div class="edit-form">
+            <label for="word">Word:</label>
+            <input type="text" id="word" value="Effervescent">
+
+            <label for="definition">Definition:</label>
+            <input type="text" id="definition" value="Giving off bubbles; lively and enthusiastic.">
+
+            <div class="buttons">
+                <button class="btn btn-primary save-button" onclick="saveWord()">Save Word</button>
+                <button class="btn btn-secondary" onclick="deleteWord()">Delete Word</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

@@ -1,0 +1,106 @@
+﻿
+h1 {
+    font-family: 'Rubik Mono One', monospace;
+    letter-spacing: 5px;
+    font-size: 3.5rem;
+    font-style: italic;
+    text-align: center;
+    color: white;
+}
+
+hr {
+    height: 10px;
+    width: 100%;
+    background-color: #F0ECE5;
+    margin-bottom: 30px;
+    border-radius: 10px;
+}
+
+
+.main {
+    padding: 5px;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.edit-form {
+    background-color: #B6BBC4;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.main-div {
+    width: min(450px, 95%);
+    box-sizing: border-box;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #1450A3;
+    font-weight: bold;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+    color: #0F2167;
+}
+
+    input:focus {
+        border-color: #3498db;
+    }
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.save-button {
+    background-color: #3498db;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+}
+
+.delete-button:hover {
+    background-color: #e74c3c;
+}
+
+.save-button:hover {
+    background-color: #2980b9;
+}
+
+@media only screen and (max-width: 420px) {
+    label {
+        font-size: 1rem;
+    }
+
+    input {
+        padding: 9px;
+    }
+
+    .edit-form {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .save-button {
+        padding: 10px;
+    }
+}
