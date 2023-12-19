@@ -1,0 +1,84 @@
+﻿
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    margin-top: 200px;
+}
+
+.homepage-background {
+    text-align: center;
+}
+
+/* Logo plus the line */
+
+h1 {
+    font-family: 'Rubik Mono One', monospace;
+    letter-spacing: 10px;
+    font-size: 7rem;
+    font-style: italic;
+}
+
+hr {
+    height: 20px;
+    width: 100%;
+    background-color: #F0ECE5;
+    margin-bottom: 30px;
+}
+
+
+
+/* Buttons */
+
+.btn {
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    margin: 15px 20px;
+    font-weight: 700;
+}
+
+@media only screen and (max-width: 768px) {
+
+    /* Logo plus the line */
+    h1 {
+        letter-spacing: 8px;
+        font-size: 5rem;
+    }
+
+    hr {
+        height: 10px;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 12px 25px;
+        font-size: 1.0rem;
+        letter-spacing: 2px;
+        margin: 15px 20px;
+        font-weight: 700;
+    }
+}
+
+@media only screen and (max-width: 410px) {
+    /* Logo plus the line */
+    h1 {
+        letter-spacing: 8px;
+        font-size: 3.2rem;
+    }
+
+    hr {
+        height: 5px;
+        margin-bottom: 20px;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 10px 22px;
+        font-size: 1.0rem;
+        letter-spacing: 1.8px;
+        margin: 15px 20px;
+        font-weight: 700;
+    }
+}
