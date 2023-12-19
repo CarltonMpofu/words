@@ -1,0 +1,72 @@
+﻿
+/* Center */
+.flex-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+/* Main background */
+.card-background {
+    width: min(25rem, 97%);
+    color: black;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+/* Logo plus the line */
+
+h1 {
+    font-family: 'Rubik Mono One', monospace;
+    letter-spacing: 5px;
+    font-size: 3.5rem;
+    font-style: italic;
+    text-align: center;
+    color: white;
+}
+
+hr {
+    height: 10px;
+    width: 100%;
+    background-color: #F0ECE5;
+    margin-bottom: 30px;
+    border-radius: 10px;
+}
+
+/* login form start */
+
+.login-background {
+    border-radius: 20px;
+    background-color: #B6BBC4;
+    padding: 20px;
+    color: #161A30;
+}
+
+h2 {
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 2.2rem;
+}
+
+/* Form */
+
+.form-background {
+    margin-top: 20px;
+}
+
+label {
+    font-size: 1.1rem;
+}
+
+.form-control {
+    color: #191D88;
+}
+
+
+
+
+
+
+
+
+
