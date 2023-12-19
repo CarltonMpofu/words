@@ -1,4 +1,21 @@
 ﻿
+/* Center */
+.flex-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+/* Main background */
+.card-background {
+    width: min(25rem, 97%);
+    color: black;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+/* Logo plus the line */
+
 h1 {
     font-family: 'Rubik Mono One', monospace;
     letter-spacing: 5px;
@@ -16,10 +33,25 @@ hr {
     border-radius: 10px;
 }
 
+/* login form start */
+
+.form-background {
+    border-radius: 20px;
+    background-color: #B6BBC4;
+    padding: 20px;
+    color: #161A30;
+}
+
 h2 {
     font-weight: 600;
     letter-spacing: 2px;
     font-size: 2.2rem;
+}
+
+/* Form */
+
+form {
+    margin-top: 20px;
 }
 
 label {
@@ -28,29 +60,4 @@ label {
 
 .form-control {
     color: #191D88;
-}
-
-.card-background {
-    width: min(25rem, 97%);
-    color: black;
-    font-family: 'Titillium Web', sans-serif;
-}
-
-.login-background {
-    border-radius: 20px;
-    background-color: #B6BBC4;
-    padding: 20px;
-    color: #161A30;
-}
-
-
-.form-background {
-    margin-top: 20px;
-}
-
-.flex-container {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    margin-top: 100px;
 }
