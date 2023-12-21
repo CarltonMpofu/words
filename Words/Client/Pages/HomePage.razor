@@ -1,8 +1,8 @@
-﻿@layout PublicLayout
-@* @page "/homepage" *@
+﻿@* @page "/homepage" *@
 @page "/"
 @inject NavigationManager NavigationManager
 @inject ILocalStorageService LocalStorage
+
 
 <div class="main">
     <div class="homepage-background">
@@ -15,6 +15,8 @@
     </div>
 </div>
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; }
 
     void ToLoginPage()
     {
@@ -26,8 +28,21 @@
         NavigationManager.NavigateTo("registerpage");
     }
 
-    protected override async void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        await LocalStorage.RemoveItemAsync("token");
+        // Comment out later
+        // await LocalStorage.RemoveItemAsync("token");
+
+        var user = (await AuthState).User;
+        if (user.Identity is not null)
+        {
+            if (user.Identity.IsAuthenticated)
+            {
+                NavigationManager.NavigateTo("/wordspage");
+            }
+        }
+
+        await base.OnInitializedAsync();
     }
+
 }

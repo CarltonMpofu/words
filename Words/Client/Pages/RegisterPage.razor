@@ -1,4 +1,4 @@
-﻿@layout PublicLayout
+﻿@* @layout PublicLayout *@
 @page "/registerpage"
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
@@ -51,6 +51,23 @@
 </div> 
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await AuthState).User;
+        if (user.Identity is not null)
+        {
+            if (user.Identity.IsAuthenticated)
+            {
+                NavigationManager.NavigateTo("/wordspage");
+            }
+        }
+
+        await base.OnInitializedAsync();
+    }
+
     UserRegisterDto userRegisterDto = new UserRegisterDto { Username = "Carlton", Password = "12345678", Password2 = "12345678" };
 
     // List<User> users = new List<User>();

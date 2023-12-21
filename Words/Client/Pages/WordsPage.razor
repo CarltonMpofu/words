@@ -1,5 +1,7 @@
 ﻿@page "/wordspage"
+@inject NavigationManager NavigationManager
 @attribute [Authorize]
+
 
 
 <div class="main">
@@ -44,5 +46,21 @@
 </div>
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await AuthState).User;
+        if (user.Identity is not null)
+        {
+            if (!user.Identity.IsAuthenticated)
+            {
+                NavigationManager.NavigateTo("/homepage");
+            }
+        }
+
+        await base.OnInitializedAsync();
+    }
 
 }

@@ -1,4 +1,4 @@
-﻿@layout PublicLayout
+﻿@* @layout PublicLayout *@
 @page "/loginpage"
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
@@ -37,9 +37,26 @@
 </div>
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; }
+
     UserLoginDto userDto = new UserLoginDto { UserName = "Carlton", Password="123456789" };
 
     string invalidPasswordWarning = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = (await AuthState).User;
+        if(user.Identity is not null)
+        {
+            if (user.Identity.IsAuthenticated)
+            {
+                NavigationManager.NavigateTo("/wordspage");
+            }
+        }
+        
+        await base.OnInitializedAsync();
+    }
 
     async Task HandleSubmit()
     {

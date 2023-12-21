@@ -1,64 +1,41 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider authStateProvider
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Words</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+        <a class="navbar-brand" href="/wordspage">Words</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav me-auto mb-2 mb-lg-0">
+                <AuthorizeView>
+                    <NotAuthorized>
+                        <a class="nav-link"  href="/loginpage">Login</a>
+                        <a class="nav-link"  href="/registerpage">Register</a>
+                    </NotAuthorized>
+                    <Authorized>
+                        <a class="nav-link"  href="#">Create Word</a>
+                        <a class="nav-link"  href="#">Logout</a>
+                    </Authorized>
+                 
+                </AuthorizeView>                   
+            </div>
+            <a style="color:blue; cursor:pointer;" class="nav-link" @onclick="HandleClick">Logout</a>
+        </div>
     </div>
-</div>
+</nav>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="homepage">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Home Page
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="loginpage">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Login Page
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="registerpage">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Register Page
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="wordspage">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Words Page
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="editwordpage">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Edit Word Page
-            </NavLink>
-        </div>
-    </nav>
-</div>
 
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+@code
+{
+    async Task HandleClick()
     {
-        collapseNavMenu = !collapseNavMenu;
+        //Console.WriteLine("Clicked");
+        await LocalStorage.RemoveItemAsync("token");
+        await authStateProvider.GetAuthenticationStateAsync();
+
+        NavigationManager.NavigateTo("/");
     }
 }

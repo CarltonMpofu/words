@@ -111,10 +111,3 @@ a, .btn-link {
         content: var(--blazor-load-percentage-text, "Loading");
     }
 
-.mudTF-background {
-    background-color: white;
-}
-
-.mud-card-contenttt {
-    padding: 0;
-}
