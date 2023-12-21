@@ -51,7 +51,7 @@
 </div> 
 
 @code {
-    RegisterFormModel registerFormModel = new RegisterFormModel { Username = "Carlton", Password = "12345678", Password2 = "12345678" };
+    UserRegisterDto registerFormModel = new UserRegisterDto { Username = "Carlton", Password = "12345678", Password2 = "12345678" };
 
     List<User> users = new List<User>();
 
@@ -75,7 +75,7 @@
                 // user.Password = registerFormModel.Password;
                 Console.WriteLine("Create the user");
                 Console.WriteLine(registerFormModel.Username);
-                var currentUser = await Http.PostAsJsonAsync<RegisterFormModel>("api/user/register", registerFormModel);
+                var currentUser = await Http.PostAsJsonAsync<UserRegisterDto>("api/user/register", registerFormModel);
                 NavigationManager.NavigateTo("loginpage");
             }
         }

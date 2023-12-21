@@ -9,19 +9,23 @@
             <hr />
         </div>
         <div class="form-background">
-            <h2>Login</h2>
+            <h2>Login</h2> 
 
-                <form>
+                <EditForm Model="userDto" OnValidSubmit="HandleSubmit">
+                    <p> @invalidPasswordWarning</p>
+                    <DataAnnotationsValidator />
                     <div class="mb-3">
-                        <label for="exampleInputText" class="form-label">User name</label>
-                        <input type="text" class="form-control" id="exampleInputText" required>
+                        <label for="username" class="form-label">User name</label>
+                    <InputText class="form-control" @bind-Value="userDto.UserName" id="username" />
+                    <ValidationMessage For="@(() => userDto.UserName)" />
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" required>
+                        <label for="password" class="form-label">Password</label>
+                    <InputText type="password" class="form-control" @bind-Value="userDto.Password" id="password" />
+                    <ValidationMessage For="@(() => userDto.Password)" />
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                </EditForm>
         </div>
 
     </div>
@@ -29,5 +33,12 @@
 </div>
 
 @code {
+    UserLoginDto userDto = new UserLoginDto { };
 
+    string invalidPasswordWarning = "";
+
+    void HandleSubmit()
+    {
+        
+    }
 }

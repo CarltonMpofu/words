@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Words.Shared
 {
-    public class RegisterFormModel
-    {
+    public class UserRegisterDto
+    { // Data transfer object
         public int Id { get; set; }
 
         [Required]

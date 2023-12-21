@@ -33,7 +33,7 @@ namespace Words.Server.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> CreateUser(RegisterFormModel request)
+        public async Task<ActionResult<User>> CreateUser(UserRegisterDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
