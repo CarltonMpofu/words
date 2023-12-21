@@ -69,8 +69,14 @@
             if(userNameExists)
                 userNameExistsWarning = "Username already exists";
             else
-            {
+            { // Create new user
+                // User user = new User { };
+                // user.Username = registerFormModel.Username;
+                // user.Password = registerFormModel.Password;
                 Console.WriteLine("Create the user");
+                Console.WriteLine(registerFormModel.Username);
+                var currentUser = await Http.PostAsJsonAsync<RegisterFormModel>("api/user/register", registerFormModel);
+                NavigationManager.NavigateTo("loginpage");
             }
         }
         
