@@ -54,6 +54,15 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
 
+    UserRegisterDto userRegisterDto = new UserRegisterDto { Username = "Carlton", Password = "12345678", Password2 = "12345678" };
+
+    string userNameExistsWarning = "";
+
+    /// <summary>
+    /// Checks if the user has been authenticated before showing page
+    /// If authenticated then redirect user to a different page (words page)
+    /// </summary>
+    /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
         var user = (await AuthState).User;
@@ -68,11 +77,7 @@
         await base.OnInitializedAsync();
     }
 
-    UserRegisterDto userRegisterDto = new UserRegisterDto { Username = "Carlton", Password = "12345678", Password2 = "12345678" };
-
-    // List<User> users = new List<User>();
-
-    string userNameExistsWarning = "";
+    
 
     async Task HandleSubmit()
     {
@@ -80,28 +85,18 @@
 
         if(users is not null)
         {
-            //Console.WriteLine(users.Where((c) => c.Username.Equals(registerFormModel.Username)).Count());
             bool userNameExists = users.Where((c) => c.Username.Equals(userRegisterDto.Username)).Count() != 0;
 
             if(userNameExists)
                 userNameExistsWarning = "Username already exists";
             else
             { // Create new user
-                // User user = new User { };
-                // user.Username = registerFormModel.Username;
-                // user.Password = registerFormModel.Password;
-                Console.WriteLine("Create the user");
-                Console.WriteLine(userRegisterDto.Username);
+                
+                // Console.WriteLine("Create the user");
+                // Console.WriteLine(userRegisterDto.Username);
                 var currentUser = await Http.PostAsJsonAsync<UserRegisterDto>("api/user/register", userRegisterDto);
                 NavigationManager.NavigateTo("loginpage");
             }
         }
-        
-
-        //NavigationManager.NavigateTo("wordspage");
-
-        // Check if username is not in database
-        // If not then create new user with hash and salt
-        // Add to database and login
     }
 }

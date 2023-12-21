@@ -22,7 +22,10 @@
                  
                 </AuthorizeView>                   
             </div>
-            <a style="color:blue; cursor:pointer;" class="nav-link" @onclick="HandleClick">Logout</a>
+            <AuthorizeView>
+                <a style="color:blue; cursor:pointer;" class="nav-link" @onclick="HandleClick">Logout</a>
+            </AuthorizeView>
+            
         </div>
     </div>
 </nav>
@@ -32,10 +35,12 @@
 {
     async Task HandleClick()
     {
-        //Console.WriteLine("Clicked");
+        // Loging out
+        // Remove the token from local storage
         await LocalStorage.RemoveItemAsync("token");
         await authStateProvider.GetAuthenticationStateAsync();
 
+        // Go to root page (Start over)
         NavigationManager.NavigateTo("/");
     }
 }

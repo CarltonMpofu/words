@@ -29,11 +29,6 @@ namespace Words.Server.Controllers
        
         public async Task<ActionResult<List<User>>> GetAllUsers()
         {
-            //var list = new List<User>()
-            //{
-            //    new User { Id = 1, Username = "Carlton", Password = "123456"},
-            //    new User { Id = 1, Username = "Thembi", Password = "12345678"}
-            //};
 
             var list = await _context.Users.ToListAsync();
 
@@ -96,16 +91,9 @@ namespace Words.Server.Controllers
                         return Ok(token);
                     }
                 }
-                //else { return BadRequest("UserNotFound"); }
             }
 
-            //if(user == null)
-            //{
-            //    return BadRequest("User not found");
-            //}
-
-
-            return BadRequest("User not found");
+            return BadRequest("Invalid username");
         }
 
         private string CreateToken(User user) 

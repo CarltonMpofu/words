@@ -16,7 +16,7 @@
             <h2>Login</h2> 
 
                 <EditForm Model="userDto" OnValidSubmit="HandleSubmit">
-                    <p> @invalidPasswordWarning</p>
+                    <p> @loginFormWarning</p>
                     <DataAnnotationsValidator />
                     <div class="mb-3">
                         <label for="username" class="form-label">User name</label>
@@ -42,7 +42,7 @@
 
     UserLoginDto userDto = new UserLoginDto { UserName = "Carlton", Password="123456789" };
 
-    string invalidPasswordWarning = "";
+    string loginFormWarning = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -66,28 +66,22 @@
         if (!response.IsSuccessStatusCode)
         { // Not successfull
 
-            Console.WriteLine("Nuuuuuuuuuuuuuuuuuul");
-            // Console.WriteLine(response.ToString());
-            // Console.WriteLine(response.ReasonPhrase);
             if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
                 var errorMessage = await response.Content.ReadAsStringAsync();
 
-                //Console.WriteLine(errorMessage.ToString());
-
-
-                // if (errorMessage.Contains("User not found"))
-                // {
-                //     message = "User not found";
-                // }
-                // else if (errorMessage.Contains("Wrong Password"))
-                // {
-                //     message = "Wrong Password";
-                // }
-                // else
-                // {
-                //     // Handle other BadRequest scenarios
-                // }
+                if (errorMessage.Contains("Invalid username"))
+                {
+                    loginFormWarning = "User not found";
+                }
+                else if (errorMessage.Contains("Wrong password"))
+                {
+                    loginFormWarning = "Wrong Password";
+                }
+                else
+                {
+                    // Handle other BadRequest scenarios
+                }
             }
         }
         else

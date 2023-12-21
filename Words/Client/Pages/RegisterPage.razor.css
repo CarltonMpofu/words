@@ -50,11 +50,11 @@ h2 {
 
 /* Form */
 
-p
-{
+p {
     color: red;
     font-size: 1.2rem;
-    margin-bottom:0;
+    margin-bottom: 0;
+    text-align: center;
 }
 
 form {
