@@ -50,6 +50,13 @@ h2 {
 
 /* Form */
 
+p
+{
+    color: red;
+    font-size: 1.2rem;
+    margin-bottom:0;
+}
+
 form {
     margin-top: 20px;
 }

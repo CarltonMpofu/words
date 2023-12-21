@@ -1,6 +1,7 @@
 ﻿@layout PublicLayout
 @page "/registerpage"
 @inject NavigationManager NavigationManager
+@inject HttpClient Http
 
 @* <MudCard>
     <MudForm Model="user">
@@ -21,8 +22,9 @@
         </div>
         <div class="form-background">
             <h2>Register</h2>
-
+                   
                   <EditForm Model="registerFormModel" OnValidSubmit="HandleSubmit">
+                    <p> @userNameExistsWarning</p>
                     <DataAnnotationsValidator/>
                     <div class="mb-3">
                         <label for="username" class="form-label">User name</label>
@@ -40,7 +42,8 @@
                     <ValidationMessage For="@(() => registerFormModel.Password2)" />
                     </div>
                     <button type="submit" class="btn btn-primary">Register</button>
-                </EditForm>  
+                </EditForm>
+                
         </div>
 
     </div>
@@ -48,10 +51,34 @@
 </div> 
 
 @code {
-    RegisterFormModel registerFormModel = new RegisterFormModel { };
+    RegisterFormModel registerFormModel = new RegisterFormModel { Username = "Carlton", Password = "12345678", Password2 = "12345678" };
 
-    void HandleSubmit()
+    List<User> users = new List<User>();
+
+    string userNameExistsWarning = "";
+
+    async Task HandleSubmit()
     {
-        NavigationManager.NavigateTo("wordspage");
+        var users = await Http.GetFromJsonAsync<List<User>>("api/user");
+
+        if(users is not null)
+        {
+            //Console.WriteLine(users.Where((c) => c.Username.Equals(registerFormModel.Username)).Count());
+            bool userNameExists = users.Where((c) => c.Username.Equals(registerFormModel.Username)).Count() != 0;
+
+            if(userNameExists)
+                userNameExistsWarning = "Username already exists";
+            else
+            {
+                Console.WriteLine("Create the user");
+            }
+        }
+        
+
+        //NavigationManager.NavigateTo("wordspage");
+
+        // Check if username is not in database
+        // If not then create new user with hash and salt
+        // Add to database and login
     }
 }
