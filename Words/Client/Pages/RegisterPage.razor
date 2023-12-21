@@ -76,7 +76,7 @@
                 Console.WriteLine("Create the user");
                 Console.WriteLine(userRegisterDto.Username);
                 var currentUser = await Http.PostAsJsonAsync<UserRegisterDto>("api/user/register", userRegisterDto);
-                // NavigationManager.NavigateTo("loginpage");
+                NavigationManager.NavigateTo("loginpage");
             }
         }
         

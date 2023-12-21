@@ -1,6 +1,8 @@
 ﻿@layout PublicLayout
-@page "/homepage"
+@* @page "/homepage" *@
+@page "/"
 @inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage
 
 <div class="main">
     <div class="homepage-background">
@@ -22,5 +24,10 @@
     void ToRegisterPage()
     {
         NavigationManager.NavigateTo("registerpage");
+    }
+
+    protected override async void OnInitialized()
+    {
+        await LocalStorage.RemoveItemAsync("token");
     }
 }

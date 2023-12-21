@@ -2,6 +2,8 @@
 @page "/loginpage"
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
 
 <div class="flex-container">
 
@@ -45,7 +47,8 @@
 
 
         if (!response.IsSuccessStatusCode)
-        {
+        { // Not successfull
+
             Console.WriteLine("Nuuuuuuuuuuuuuuuuuul");
             // Console.WriteLine(response.ToString());
             // Console.WriteLine(response.ReasonPhrase);
@@ -54,7 +57,7 @@
                 var errorMessage = await response.Content.ReadAsStringAsync();
 
                 //Console.WriteLine(errorMessage.ToString());
-                
+
 
                 // if (errorMessage.Contains("User not found"))
                 // {
@@ -72,7 +75,11 @@
         }
         else
         {
-            Console.WriteLine("Noooooooooooooot");
+            var token = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(token);
+            await LocalStorage.SetItemAsync("token", token);
+            await AuthStateProvider.GetAuthenticationStateAsync();
+            NavigationManager.NavigateTo("/wordspage");
         }
 
     }
