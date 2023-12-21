@@ -1,5 +1,6 @@
 ﻿@layout PublicLayout
 @page "/homepage"
+@inject NavigationManager NavigationManager
 
 <div class="main">
     <div class="homepage-background">
@@ -7,10 +8,19 @@
         <h1>Words</h1>
         <hr />
 
-        <button type="button" class="btn btn-primary">Login</button>
-        <button type="button" class="btn btn-primary">Signup</button>
+        <button type="button" class="btn btn-primary" @onclick="ToLoginPage">Login</button>
+        <button type="button" class="btn btn-primary" @onclick="ToRegisterPage">Signup</button>
     </div>
 </div>
 @code {
 
+    void ToLoginPage()
+    {
+        NavigationManager.NavigateTo("loginpage");
+    }
+
+    void ToRegisterPage()
+    {
+        NavigationManager.NavigateTo("registerpage");
+    }
 }

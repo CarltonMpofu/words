@@ -1,7 +1,18 @@
 ﻿@layout PublicLayout
 @page "/registerpage"
+@inject NavigationManager NavigationManager
 
-<div class="flex-container">
+@* <MudCard>
+    <MudForm Model="user">
+        <MudCardContent>
+            <MudTextField @bind-Value="TextValue" Label="Standard" Variant="Variant.Text" Margin="Margin.Dense"></MudTextField>
+            <MudTextField @bind-Value="TextValue" Label="Filled" Variant="Variant.Filled" Margin="Margin.Dense"></MudTextField>
+            <MudTextField @bind-Value="TextValue" Label="Outlined" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+        </MudCardContent>
+    </MudForm>
+</MudCard> *@
+
+ <div class="flex-container">
 
     <div class="card-background">
         <div>
@@ -11,31 +22,36 @@
         <div class="form-background">
             <h2>Register</h2>
 
-                <form>
+                  <EditForm Model="registerFormModel" OnValidSubmit="HandleSubmit">
+                    <DataAnnotationsValidator/>
                     <div class="mb-3">
-                        <label for="exampleInputText" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="exampleInputText" required>
+                        <label for="username" class="form-label">User name</label>
+                        <InputText class="form-control" @bind-Value="registerFormModel.Username" id="username"/>
+                        <ValidationMessage For="@(() => registerFormModel.Username)" />
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputText" class="form-label">User name</label>
-                        <input type="text" class="form-control" id="exampleInputText" required>
+                        <label for="password" class="form-label">Password</label>
+                    <InputText type="password" class="form-control" @bind-Value="registerFormModel.Password" id="password" />
+                    <ValidationMessage For="@(() => registerFormModel.Password)" />
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" required>
+                        <label for="password2" class="form-label">Confirm password</label>
+                    <InputText type="password" class="form-control" @bind-Value="registerFormModel.Password2" id="password2" />
+                    <ValidationMessage For="@(() => registerFormModel.Password2)" />
                     </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Confirm password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </EditForm>  
         </div>
 
     </div>
 
-</div>
+</div> 
 
 @code {
+    RegisterFormModel registerFormModel = new RegisterFormModel { };
 
+    void HandleSubmit()
+    {
+        NavigationManager.NavigateTo("wordspage");
+    }
 }
