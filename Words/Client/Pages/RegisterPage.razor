@@ -23,23 +23,23 @@
         <div class="form-background">
             <h2>Register</h2>
                    
-                  <EditForm Model="registerFormModel" OnValidSubmit="HandleSubmit">
+                  <EditForm Model="userRegisterDto" OnValidSubmit="HandleSubmit">
                     <p> @userNameExistsWarning</p>
                     <DataAnnotationsValidator/>
                     <div class="mb-3">
                         <label for="username" class="form-label">User name</label>
-                        <InputText class="form-control" @bind-Value="registerFormModel.Username" id="username"/>
-                        <ValidationMessage For="@(() => registerFormModel.Username)" />
+                        <InputText class="form-control" @bind-Value="userRegisterDto.Username" id="username"/>
+                        <ValidationMessage For="@(() => userRegisterDto.Username)" />
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                    <InputText type="password" class="form-control" @bind-Value="registerFormModel.Password" id="password" />
-                    <ValidationMessage For="@(() => registerFormModel.Password)" />
+                    <InputText type="password" class="form-control" @bind-Value="userRegisterDto.Password" id="password" />
+                    <ValidationMessage For="@(() => userRegisterDto.Password)" />
                     </div>
                     <div class="mb-3">
                         <label for="password2" class="form-label">Confirm password</label>
-                    <InputText type="password" class="form-control" @bind-Value="registerFormModel.Password2" id="password2" />
-                    <ValidationMessage For="@(() => registerFormModel.Password2)" />
+                    <InputText type="password" class="form-control" @bind-Value="userRegisterDto.Password2" id="password2" />
+                    <ValidationMessage For="@(() => userRegisterDto.Password2)" />
                     </div>
                     <button type="submit" class="btn btn-primary">Register</button>
                 </EditForm>
@@ -51,9 +51,9 @@
 </div> 
 
 @code {
-    UserRegisterDto registerFormModel = new UserRegisterDto { Username = "Carlton", Password = "12345678", Password2 = "12345678" };
+    UserRegisterDto userRegisterDto = new UserRegisterDto { Username = "Carlton", Password = "12345678", Password2 = "12345678" };
 
-    List<User> users = new List<User>();
+    // List<User> users = new List<User>();
 
     string userNameExistsWarning = "";
 
@@ -64,7 +64,7 @@
         if(users is not null)
         {
             //Console.WriteLine(users.Where((c) => c.Username.Equals(registerFormModel.Username)).Count());
-            bool userNameExists = users.Where((c) => c.Username.Equals(registerFormModel.Username)).Count() != 0;
+            bool userNameExists = users.Where((c) => c.Username.Equals(userRegisterDto.Username)).Count() != 0;
 
             if(userNameExists)
                 userNameExistsWarning = "Username already exists";
@@ -74,9 +74,9 @@
                 // user.Username = registerFormModel.Username;
                 // user.Password = registerFormModel.Password;
                 Console.WriteLine("Create the user");
-                Console.WriteLine(registerFormModel.Username);
-                var currentUser = await Http.PostAsJsonAsync<UserRegisterDto>("api/user/register", registerFormModel);
-                NavigationManager.NavigateTo("loginpage");
+                Console.WriteLine(userRegisterDto.Username);
+                var currentUser = await Http.PostAsJsonAsync<UserRegisterDto>("api/user/register", userRegisterDto);
+                // NavigationManager.NavigateTo("loginpage");
             }
         }
         

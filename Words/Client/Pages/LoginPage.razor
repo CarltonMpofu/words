@@ -1,5 +1,7 @@
 ﻿@layout PublicLayout
 @page "/loginpage"
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
 
 <div class="flex-container">
 
@@ -33,12 +35,45 @@
 </div>
 
 @code {
-    UserLoginDto userDto = new UserLoginDto { };
+    UserLoginDto userDto = new UserLoginDto { UserName = "Carlton", Password="123456789" };
 
     string invalidPasswordWarning = "";
 
-    void HandleSubmit()
+    async Task HandleSubmit()
     {
-        
+        var response = await Http.PostAsJsonAsync<UserLoginDto>("api/user/login", userDto);
+
+
+        if (!response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Nuuuuuuuuuuuuuuuuuul");
+            // Console.WriteLine(response.ToString());
+            // Console.WriteLine(response.ReasonPhrase);
+            if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+
+                //Console.WriteLine(errorMessage.ToString());
+                
+
+                // if (errorMessage.Contains("User not found"))
+                // {
+                //     message = "User not found";
+                // }
+                // else if (errorMessage.Contains("Wrong Password"))
+                // {
+                //     message = "Wrong Password";
+                // }
+                // else
+                // {
+                //     // Handle other BadRequest scenarios
+                // }
+            }
+        }
+        else
+        {
+            Console.WriteLine("Noooooooooooooot");
+        }
+
     }
 }

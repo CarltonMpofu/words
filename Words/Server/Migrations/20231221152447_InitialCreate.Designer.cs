@@ -11,7 +11,7 @@ using Words.Server.Data;
 namespace Words.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231221030650_InitialCreate")]
+    [Migration("20231221152447_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -32,13 +32,13 @@ namespace Words.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("PasswordSalt")
+                    b.Property<byte[]>("PasswordSalt")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()
