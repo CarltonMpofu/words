@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Words.Shared
@@ -20,6 +21,7 @@ namespace Words.Shared
         public string Definition { get; set; } = string.Empty;
 
         // Navigation property for the associated user
+        [JsonIgnore]
         public ApplicationUser? User { get; set; }
 
     }

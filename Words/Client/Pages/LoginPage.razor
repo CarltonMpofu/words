@@ -54,7 +54,7 @@
                 NavigationManager.NavigateTo("/wordspage");
             }
         }
-        
+
         await base.OnInitializedAsync();
     }
 
@@ -86,11 +86,22 @@
         }
         else
         {
-            var token = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(token);
-            await LocalStorage.SetItemAsync("token", token);
-            await AuthStateProvider.GetAuthenticationStateAsync();
-            NavigationManager.NavigateTo("/wordspage");
+            // Get the token and id from response
+            var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>();
+
+            if (loginResponse != null)
+            {
+                var token = loginResponse.Token;
+                var userId = loginResponse.UserId;
+
+                // Console.WriteLine(token);
+                // Console.WriteLine(userId);
+
+                await LocalStorage.SetItemAsync("token", token);
+                await AuthStateProvider.GetAuthenticationStateAsync();
+
+                NavigationManager.NavigateTo($"/wordspage/{userId}");
+            }
         }
 
     }

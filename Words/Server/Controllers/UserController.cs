@@ -35,6 +35,25 @@ namespace Words.Server.Controllers
             return Ok(list);
         }
 
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ApplicationUser>> GetAllUser(int id)
+        {
+
+            var userWithWords = await _context.Users.FindAsync(id);
+
+            ApplicationUser rez;
+            if (userWithWords != null)
+            {
+                rez = userWithWords;
+                return Ok(rez);
+
+            }
+
+            return NotFound("User not found");
+
+        }
+
         //public UserController(IConfiguration configuration)
         //{
         //    _configuration = configuration;
@@ -66,7 +85,7 @@ namespace Words.Server.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(UserLoginDto request)
+        public async Task<ActionResult<LoginResponse>> Login(UserLoginDto request)
         {
             var users = await _context.Users.ToListAsync();
 
@@ -88,7 +107,13 @@ namespace Words.Server.Controllers
 
                         string token = CreateToken(user);
 
-                        return Ok(token);
+                        var response = new LoginResponse
+                        {
+                            Token = token,
+                            UserId = user.Id
+                        };
+
+                        return Ok(response);
                     }
                 }
             }
@@ -101,7 +126,8 @@ namespace Words.Server.Controllers
             // Claims describe the user that has been authenticated
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.Username)
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim("Sub", user.Id.ToString())
             };
 
             string tokenSecret = "This is a token. What is a token. It is a secret I cannot tell you. Sorry.";

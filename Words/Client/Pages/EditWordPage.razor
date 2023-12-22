@@ -1,5 +1,5 @@
-﻿@page "/editwordpage"
-@page "/editwordpage/{id:int}"
+﻿@page "/editwordpage/{userId:int}"
+@page "/editwordpage/{userId:int}/{wordId:int}"
 @inject HttpClient Http;
 @inject NavigationManager NavigationManager;
 
@@ -11,7 +11,7 @@
         <hr>
         
         <div class="edit-form">
-            @if(Id is null)
+            @if (WordId is null)
             {
                 <h2>Add Word</h2>
             }
@@ -37,23 +37,24 @@
 </div>
 
 @code {
-    [Parameter]
-    public int? Id { get; set; }
+    [Parameter] public int UserId { get; set; }
+    [Parameter] public int? WordId { get; set; }
 
     UserWord word = new UserWord { };
 
     async Task HandleSubmit()
     {
-        if(Id is null)
+        if (WordId is null)
         {
-            await Http.PostAsJsonAsync<UserWord>("api/word", word);
+            word.UserId = UserId;
+            await Http.PostAsJsonAsync<UserWord>("api/word/", word);
         }
         else
         {
-            await Http.PutAsJsonAsync<UserWord>($"api/word/{Id}", word);
+            await Http.PutAsJsonAsync<UserWord>($"api/word/{WordId}", word);
         }
 
-        NavigationManager.NavigateTo("/wordspage");
+        NavigationManager.NavigateTo($"/wordspage/{UserId}");
     }
 
     // protected override async Task OnParametersSetAsync()

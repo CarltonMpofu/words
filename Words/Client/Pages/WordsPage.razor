@@ -1,4 +1,4 @@
-﻿@page "/wordspage/{id:int}"
+﻿@page "/wordspage/{userId:int}"
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 @attribute [Authorize]
@@ -22,7 +22,7 @@
         {
             if(words.Count == 0)
             { // For now
-                <a href="#effervescent" class="word-card">
+                @* <a href="#effervescent" class="word-card">
                     <div class="word-header">
                         <h3>Effervescent</h3>
                     </div>
@@ -51,7 +51,7 @@
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque suscipit erat nec tempus
                         feugiat. Phasellus eu tortor suscipit, laoreet libero quis, venenatis tellus.
                     </p>
-                </a>
+                </a> *@
             }
             else
             {
@@ -72,14 +72,14 @@
 </div>
 
 @code {
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthState { get; set; }
+    // [CascadingParameter]
+    // public Task<AuthenticationState> AuthState { get; set; }
     [Parameter]
-    public int? Id { get; set; }
+    public int? UserId { get; set; }
 
     void CreateWord()
     {
-        NavigationManager.NavigateTo("/editwordpage");
+        NavigationManager.NavigateTo($"/editwordpage/{UserId}");
     }
 
     void EditWord(int id)
@@ -90,17 +90,39 @@
 
     List<UserWord>? words;
 
-    protected override async Task OnInitializedAsync()
-    {
-        var response = await Http.GetFromJsonAsync<List<UserWord>>("api/word");
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     var response = await Http.GetFromJsonAsync<List<UserWord>>("api/word");
 
-        if(response != null)
+    //     if(response != null)
+    //     {
+    //         words = response;
+    //     }
+
+    // }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (UserId is not null)
         {
-            words = response;
+
+            var response = await Http.GetFromJsonAsync<List<UserWord>>($"api/word/{UserId}");
+
+
+            if (response is not null)
+            {
+                words = response;
+                Console.WriteLine("Done");
+            }
+
         }
 
+        //return base.OnParametersSetAsync();
     }
 
-    
+    // protected override async void OnParametersSet()
+    // {
+        
+    // }
 
 }

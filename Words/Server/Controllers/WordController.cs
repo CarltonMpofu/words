@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using Words.Server.Data;
 using Words.Shared;
 
@@ -18,12 +19,78 @@ namespace Words.Server.Controllers
             _context = context;
         }
 
-        
-        public async Task<ActionResult<List<UserWord>>> GetAllWords(int userId) 
+        [HttpGet]
+        public async Task<ActionResult<ApplicationUser>> GetAllWords()
         {
-            var userWithWords = _context.Users.Include(u => u.UserWords).FirstOrDefault(u => u.Id == userId);
+            var userWithWords = await _context.Users.FindAsync(2);
 
-            return Ok(userWithWords.UserWords);
+            ApplicationUser rez;
+            if (userWithWords != null)
+            {
+                rez = userWithWords;
+                return Ok(rez);
+            }
+            //var userWords = _context.UserWords.Where(uw => uw.UserId == userId).ToList();
+            //return Ok(userWithWords);
+
+            //var result = await _context.Users.ToListAsync();
+
+            //return Ok(result);
+
+            return NotFound("User not found");
+
+        }
+
+        // Works
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<ApplicationUser>> GetAllWords(int id)
+        //{
+
+        //    var userWithWords = await _context.Users.FindAsync(id);
+
+        //    ApplicationUser rez;
+        //    if (userWithWords != null)
+        //    {
+        //        rez = userWithWords;
+        //        return Ok(rez);
+
+        //    }
+
+        //    return NotFound("User not found");
+
+        //}
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<UserWord>>> GetAllWords(int id)
+        {
+
+            var userWithWords = await _context.Users.FindAsync(id);
+
+
+            if (userWithWords != null)
+            {
+                var userWords =  _context.UserWords.Where(w => w.UserId == id).ToList();
+                if (userWords != null)
+                {
+                    return Ok(userWords);
+                }
+                else
+                { return BadRequest("NOTHING"); }
+
+
+            }
+
+            return BadRequest("User not found");
+
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<string>> AddWord(UserWord word)
+        {
+            _context.UserWords.Add(word);
+            await _context.SaveChangesAsync();
+
+            return Ok(word);
         }
 
         //[HttpGet("{id}")]

@@ -11,8 +11,8 @@ using Words.Server.Data;
 namespace Words.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231222004346_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231222131634_IntialCreate")]
+    partial class IntialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace Words.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Words.Shared.User", b =>
+            modelBuilder.Entity("Words.Shared.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,7 +49,7 @@ namespace Words.Server.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Words.Shared.Word", b =>
+            modelBuilder.Entity("Words.Shared.UserWord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,9 +65,30 @@ namespace Words.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Words");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserWords");
+                });
+
+            modelBuilder.Entity("Words.Shared.UserWord", b =>
+                {
+                    b.HasOne("Words.Shared.ApplicationUser", "User")
+                        .WithMany("UserWords")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Words.Shared.ApplicationUser", b =>
+                {
+                    b.Navigation("UserWords");
                 });
 #pragma warning restore 612, 618
         }
