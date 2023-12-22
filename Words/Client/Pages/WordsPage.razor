@@ -85,7 +85,7 @@
     void EditWord(int id)
     {
         Console.WriteLine(id);
-        NavigationManager.NavigateTo($"/editwordpage/{id}");
+        NavigationManager.NavigateTo($"/editwordpage/{UserId}/{id}");
     }
 
     List<UserWord>? words;

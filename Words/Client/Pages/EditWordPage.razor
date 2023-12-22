@@ -29,7 +29,7 @@
                 <ValidationMessage For="@(() => word.Definition)" />
             <div class="buttons">
                 <button class="btn btn-primary save-button" type="submit">Save Word</button>
-                <button class="btn btn-secondary" onclick="deleteWord()">Delete Word</button>
+                <button class="btn btn-secondary" type="button"  @onclick="DeleteWord">Delete Word</button>
             </div>
             </EditForm>
         </div>
@@ -57,16 +57,27 @@
         NavigationManager.NavigateTo($"/wordspage/{UserId}");
     }
 
-    // protected override async Task OnParametersSetAsync()
-    // {
-    //     if(Id is not null)
-    //     {
-    //         var result = await Http.GetFromJsonAsync<UserWord>($"api/word/{Id}");
+    async Task DeleteWord()
+    {
+        if(WordId is not null)
+        {
+            await Http.DeleteAsync($"api/word/{WordId}");
 
-    //         if(result != null)
-    //         {
-    //             word = result;
-    //         }
-    //     }
-    // }
+            NavigationManager.NavigateTo($"/wordspage/{UserId}");
+        }
+        
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (WordId is not null)
+        {
+            var result = await Http.GetFromJsonAsync<UserWord>($"api/word/{UserId}/{WordId}");
+
+            if(result != null)
+            {
+                word = result;
+            }
+        }
+    }
 }

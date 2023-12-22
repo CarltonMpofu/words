@@ -19,63 +19,48 @@ namespace Words.Server.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<ApplicationUser>> GetAllWords()
-        {
-            var userWithWords = await _context.Users.FindAsync(2);
 
-            ApplicationUser rez;
-            if (userWithWords != null)
-            {
-                rez = userWithWords;
-                return Ok(rez);
-            }
-            //var userWords = _context.UserWords.Where(uw => uw.UserId == userId).ToList();
-            //return Ok(userWithWords);
-
-            //var result = await _context.Users.ToListAsync();
-
-            //return Ok(result);
-
-            return NotFound("User not found");
-
-        }
-
-        // Works
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<ApplicationUser>> GetAllWords(int id)
-        //{
-
-        //    var userWithWords = await _context.Users.FindAsync(id);
-
-        //    ApplicationUser rez;
-        //    if (userWithWords != null)
-        //    {
-        //        rez = userWithWords;
-        //        return Ok(rez);
-
-        //    }
-
-        //    return NotFound("User not found");
-
-        //}
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<UserWord>>> GetAllWords(int id)
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<List<UserWord>>> GetAllWords(int userId)
         {
 
-            var userWithWords = await _context.Users.FindAsync(id);
+            var userWithWords = await _context.Users.FindAsync(userId);
 
 
             if (userWithWords != null)
             {
-                var userWords =  _context.UserWords.Where(w => w.UserId == id).ToList();
+                var userWords =  _context.UserWords.Where(w => w.UserId == userId).ToList();
                 if (userWords != null)
                 {
                     return Ok(userWords);
                 }
                 else
                 { return BadRequest("NOTHING"); }
+
+
+            }
+
+            return BadRequest("User not found");
+
+        }
+
+        [HttpGet("{userId}/{wordId}")]
+        public async Task<ActionResult<UserWord>> GetAllWords(int userId, int wordId)
+        {
+
+            var userWithWords = await _context.Users.FindAsync(userId);
+
+
+            if (userWithWords != null)
+            {
+                var userWord = await _context.UserWords.FindAsync(wordId);
+
+                if (userWord != null)
+                {
+                    return Ok(userWord);
+                }
+                else
+                { return BadRequest("Word not found haha"); }
 
 
             }
@@ -93,45 +78,42 @@ namespace Words.Server.Controllers
             return Ok(word);
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<UserWord>> GetAllWords(int id)
-        //{
-        //    var result = await _context.Words.FindAsync(id);
 
-        //    if (result == null) 
-        //    {
-        //        return NotFound("This video game is not found");
-        //    }
+        [HttpPut("{wordId}")]
+        public async Task<ActionResult<UserWord>> UpdateWord(int wordId, UserWord wordUpdate)
+        {
+            var result = await _context.UserWords.FindAsync(wordId);
 
-        //    return Ok(result);
-        //}
+            if (result == null)
+            {
+                return NotFound("Word not found");
+            }
+
+            result.Term = wordUpdate.Term;
+            result.Definition = wordUpdate.Definition;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(result);
+        }
+
+        
+        [HttpDelete("{wordId}")]
+        public async Task<ActionResult<bool>> DeleteWord(int wordId)
+        {
+            var result = await _context.UserWords.FindAsync(wordId);
+
+            if (result == null)
+            {
+                return NotFound("Word not found");
+            }
+
+            _context.UserWords.Remove(result);
+            await _context.SaveChangesAsync();
+
+            return Ok(true);
+        }
 
 
-        //[HttpPost]
-        //public async Task<ActionResult<UserWord>> AddWord(UserWord word)
-        //{
-        //    _context.Words.Add(word);
-        //    await _context.SaveChangesAsync();
-
-        //    return Ok(word);
-        //}
-
-        //[HttpPut("{id}")]
-        //public async Task<ActionResult<UserWord>> UpdateWord(int id, UserWord wordUpdate)
-        //{
-        //    var result = await _context.Words.FindAsync(id);
-
-        //    if (result == null)
-        //    {
-        //        return NotFound("This video game is not found");
-        //    }
-
-        //    result.Term = wordUpdate.Term;
-        //    result.Definition = wordUpdate.Definition;
-
-        //    await _context.SaveChangesAsync();
-
-        //    return Ok(result);
-        //}
     }
 }
