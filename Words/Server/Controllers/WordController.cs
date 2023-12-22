@@ -19,52 +19,52 @@ namespace Words.Server.Controllers
         }
 
         
-        public async Task<ActionResult<List<Word>>> GetAllWords() 
+        public async Task<ActionResult<List<UserWord>>> GetAllWords(int userId) 
         {
-            var words = await _context.Words.ToListAsync();
+            var userWithWords = _context.Users.Include(u => u.UserWords).FirstOrDefault(u => u.Id == userId);
 
-            return Ok(words);
+            return Ok(userWithWords.UserWords);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Word>> GetAllWords(int id)
-        {
-            var result = await _context.Words.FindAsync(id);
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<UserWord>> GetAllWords(int id)
+        //{
+        //    var result = await _context.Words.FindAsync(id);
 
-            if (result == null) 
-            {
-                return NotFound("This video game is not found");
-            }
+        //    if (result == null) 
+        //    {
+        //        return NotFound("This video game is not found");
+        //    }
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
 
-        [HttpPost]
-        public async Task<ActionResult<Word>> AddWord(Word word)
-        {
-            _context.Words.Add(word);
-            await _context.SaveChangesAsync();
+        //[HttpPost]
+        //public async Task<ActionResult<UserWord>> AddWord(UserWord word)
+        //{
+        //    _context.Words.Add(word);
+        //    await _context.SaveChangesAsync();
 
-            return Ok(word);
-        }
+        //    return Ok(word);
+        //}
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<Word>> UpdateWord(int id, Word wordUpdate)
-        {
-            var result = await _context.Words.FindAsync(id);
+        //[HttpPut("{id}")]
+        //public async Task<ActionResult<UserWord>> UpdateWord(int id, UserWord wordUpdate)
+        //{
+        //    var result = await _context.Words.FindAsync(id);
 
-            if (result == null)
-            {
-                return NotFound("This video game is not found");
-            }
+        //    if (result == null)
+        //    {
+        //        return NotFound("This video game is not found");
+        //    }
 
-            result.Term = wordUpdate.Term;
-            result.Definition = wordUpdate.Definition;
+        //    result.Term = wordUpdate.Term;
+        //    result.Definition = wordUpdate.Definition;
 
-            await _context.SaveChangesAsync();
+        //    await _context.SaveChangesAsync();
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
     }
 }

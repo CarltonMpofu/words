@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Words.Shared
 {
-    public class User
+    public class ApplicationUser
     {
         public int Id { get; set; }
 
@@ -18,8 +18,7 @@ namespace Words.Shared
         public byte[] PasswordSalt { get; set; }
 
 
-        //public string PasswordHash { get; set; } = string.Empty; 
-
-        //public string PasswordSalt { get; set; } = string.Empty;
+        // Navigation property for user's words
+        public List<UserWord> UserWords { get; set; }
     }
 }

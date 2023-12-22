@@ -14,8 +14,23 @@ namespace Words.Server.Data
 
         // Name of the table (Users)
         // Table Will be created during imigrations
-        public DbSet<User> Users { get; set; }
+        //public DbSet<ApplicationUser> Users { get; set; }
 
-        public DbSet<Word> Words { get; set; }
+        //public DbSet<UserWord> Words { get; set; }
+
+        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<UserWord> UserWords { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Configure relationships, indexes, etc.
+            modelBuilder.Entity<UserWord>()
+                .HasOne(uw => uw.User)
+                .WithMany(u => u.UserWords)
+                .HasForeignKey(uw => uw.UserId)
+                .OnDelete(DeleteBehavior.Cascade); // Adjust cascade delete behavior as needed
+
+            // Add other configurations as necessary
+        }
     }
 }

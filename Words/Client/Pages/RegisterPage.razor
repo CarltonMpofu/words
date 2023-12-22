@@ -81,7 +81,7 @@
 
     async Task HandleSubmit()
     {
-        var users = await Http.GetFromJsonAsync<List<User>>("api/user");
+        var users = await Http.GetFromJsonAsync<List<ApplicationUser>>("api/user");
 
         if(users is not null)
         {

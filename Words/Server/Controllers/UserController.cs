@@ -27,7 +27,7 @@ namespace Words.Server.Controllers
         }
 
        
-        public async Task<ActionResult<List<User>>> GetAllUsers()
+        public async Task<ActionResult<List<ApplicationUser>>> GetAllUsers()
         {
 
             var list = await _context.Users.ToListAsync();
@@ -41,13 +41,13 @@ namespace Words.Server.Controllers
         //}
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> CreateUser(UserRegisterDto request)
+        public async Task<ActionResult<ApplicationUser>> CreateUser(UserRegisterDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             // Set user 
             //Console.WriteLine(passwordHash.ToString(), passwordSalt.ToString());
-            User user = new User { };
+            ApplicationUser user = new ApplicationUser { };
 
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < passwordHash.Length; i++)
@@ -78,7 +78,7 @@ namespace Words.Server.Controllers
                 if (userNameExists)
                 {
                     //return Ok((false));
-                    User user = userList.First();
+                    ApplicationUser user = userList.First();
                     if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
                     {
                         return BadRequest("Wrong password");
@@ -96,7 +96,7 @@ namespace Words.Server.Controllers
             return BadRequest("Invalid username");
         }
 
-        private string CreateToken(User user) 
+        private string CreateToken(ApplicationUser user) 
         {
             // Claims describe the user that has been authenticated
             List<Claim> claims = new List<Claim>

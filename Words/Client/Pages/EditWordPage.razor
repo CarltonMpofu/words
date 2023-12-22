@@ -40,32 +40,32 @@
     [Parameter]
     public int? Id { get; set; }
 
-    Word word = new Word { };
+    UserWord word = new UserWord { };
 
     async Task HandleSubmit()
     {
         if(Id is null)
         {
-            await Http.PostAsJsonAsync<Word>("api/word", word);
+            await Http.PostAsJsonAsync<UserWord>("api/word", word);
         }
         else
         {
-            await Http.PutAsJsonAsync<Word>($"api/word/{Id}", word);
+            await Http.PutAsJsonAsync<UserWord>($"api/word/{Id}", word);
         }
 
         NavigationManager.NavigateTo("/wordspage");
     }
 
-    protected override async Task OnParametersSetAsync()
-    {
-        if(Id is not null)
-        {
-            var result = await Http.GetFromJsonAsync<Word>($"api/word/{Id}");
+    // protected override async Task OnParametersSetAsync()
+    // {
+    //     if(Id is not null)
+    //     {
+    //         var result = await Http.GetFromJsonAsync<UserWord>($"api/word/{Id}");
 
-            if(result != null)
-            {
-                word = result;
-            }
-        }
-    }
+    //         if(result != null)
+    //         {
+    //             word = result;
+    //         }
+    //     }
+    // }
 }

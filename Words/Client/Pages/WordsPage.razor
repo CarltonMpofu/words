@@ -1,4 +1,4 @@
-﻿@page "/wordspage"
+﻿@page "/wordspage/{id:int}"
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 @attribute [Authorize]
@@ -56,7 +56,7 @@
             else
             {
                 @* Console.WriteLine("More"); *@
-                @foreach (Word word in words)
+                @foreach (UserWord word in words)
                 {
                     <a @onclick="(() => EditWord(word.Id) )" class="word-card">
                         <div class="word-header">
@@ -74,6 +74,8 @@
 @code {
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
+    [Parameter]
+    public int? Id { get; set; }
 
     void CreateWord()
     {
@@ -86,11 +88,11 @@
         NavigationManager.NavigateTo($"/editwordpage/{id}");
     }
 
-    List<Word>? words;
+    List<UserWord>? words;
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetFromJsonAsync<List<Word>>("api/word");
+        var response = await Http.GetFromJsonAsync<List<UserWord>>("api/word");
 
         if(response != null)
         {
@@ -98,5 +100,7 @@
         }
 
     }
+
+    
 
 }
