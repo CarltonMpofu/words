@@ -1,26 +1,71 @@
 ﻿@page "/editwordpage"
-@attribute [Authorize]
+@page "/editwordpage/{id:int}"
+@inject HttpClient Http;
+@inject NavigationManager NavigationManager;
+
+@* @attribute [Authorize] *@
 
 <div class="main">
     <div class="main-div">
         <h1>Words</h1>
         <hr>
-
+        
         <div class="edit-form">
-            <label for="word">Word:</label>
-            <input type="text" id="word" value="Effervescent">
-
+            @if(Id is null)
+            {
+                <h2>Add Word</h2>
+            }
+            else
+            {
+                <h2>Edit Word</h2>
+            }
+            <EditForm Model="word" OnValidSubmit="HandleSubmit">
+                <DataAnnotationsValidator />
+            <label for="term">Term:</label>
+                <InputText class="form-control" id="term" @bind-Value="word.Term" />
+                <ValidationMessage For="@(() => word.Term)" />
             <label for="definition">Definition:</label>
-            <input type="text" id="definition" value="Giving off bubbles; lively and enthusiastic.">
-
+                <InputText class="form-control" id="definition" @bind-Value="word.Definition" />
+                <ValidationMessage For="@(() => word.Definition)" />
             <div class="buttons">
-                <button class="btn btn-primary save-button" onclick="saveWord()">Save Word</button>
+                <button class="btn btn-primary save-button" type="submit">Save Word</button>
                 <button class="btn btn-secondary" onclick="deleteWord()">Delete Word</button>
             </div>
+            </EditForm>
         </div>
     </div>
 </div>
 
 @code {
+    [Parameter]
+    public int? Id { get; set; }
 
+    Word word = new Word { };
+
+    async Task HandleSubmit()
+    {
+        if(Id is null)
+        {
+            await Http.PostAsJsonAsync<Word>("api/word", word);
+        }
+        else
+        {
+            await Http.PutAsJsonAsync<Word>($"api/word/{Id}", word);
+        }
+
+        NavigationManager.NavigateTo("/wordspage");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if(Id is not null)
+        {
+            var result = await Http.GetFromJsonAsync<Word>($"api/word/{Id}");
+
+            if(result != null)
+            {
+                word = result;
+            }
+        }
+    }
 }

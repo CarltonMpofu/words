@@ -40,17 +40,25 @@ hr {
     box-sizing: border-box;
 }
 
+h2 {
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+    color: #161A30;
+}
+
 label {
     display: block;
-    margin-bottom: 10px;
     color: #1450A3;
     font-weight: bold;
     font-family: 'Titillium Web', sans-serif;
     font-size: 1.1rem;
     letter-spacing: 1px;
+    margin-top: 20px;
+    margin-bottom: 5px;
 }
 
-input {
+/*input {
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
@@ -63,12 +71,13 @@ input {
 
     input:focus {
         border-color: #3498db;
-    }
+    }*/
 
 .buttons {
     display: flex;
     justify-content: space-between;
     font-family: 'Titillium Web', sans-serif;
+    margin-top: 35px;
 }
 
 .save-button {
@@ -89,11 +98,12 @@ input {
 @media only screen and (max-width: 420px) {
     label {
         font-size: 1rem;
+        
     }
 
-    input {
+    /*input {
         padding: 9px;
-    }
+    }*/
 
     .edit-form {
         padding-left: 15px;

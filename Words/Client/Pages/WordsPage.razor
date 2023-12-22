@@ -1,5 +1,6 @@
 ﻿@page "/wordspage"
 @inject NavigationManager NavigationManager
+@inject HttpClient Http
 @attribute [Authorize]
 
 
@@ -9,39 +10,64 @@
     <h1>Words</h1>
 
     <hr />
-    <button class="btn btn-primary">Add Word</button>
+    <button class="btn btn-primary" @onclick="CreateWord">Add Word</button>
 
     <div class="container">
-        <a href="#effervescent" class="word-card">
-            <div class="word-header">
-                <h3>Effervescent</h3>
-            </div>
-            <p>Giving off bubbles; lively and enthusiastic.</p>
-        </a>
 
-        <a href="#serendipity" class="word-card">
-            <div class="word-header">
-                <h3>Serendipity</h3>
-            </div>
-            <p>The occurrence and development of events by chance in a happy or beneficial way.</p>
-        </a>
+        @if(words is null)
+        {
+            <span>Loading Words ...</span>
+        }
+        else
+        {
+            if(words.Count == 0)
+            { // For now
+                <a href="#effervescent" class="word-card">
+                    <div class="word-header">
+                        <h3>Effervescent</h3>
+                    </div>
+                    <p>Giving off bubbles; lively and enthusiastic.</p>
+                </a>
 
-        <a href="#mellifluous" class="word-card">
-            <div class="word-header">
-                <h3>Mellifluous</h3>
-            </div>
-            <p>(of a voice or words) Sweet or musical; pleasant to hear.</p>
-        </a>
+                <a href="#serendipity" class="word-card">
+                    <div class="word-header">
+                        <h3>Serendipity</h3>
+                    </div>
+                    <p>The occurrence and development of events by chance in a happy or beneficial way.</p>
+                </a>
 
-        <a href="#ubiquitous" class="word-card">
-            <div class="word-header">
-                <h3>Ubiquitous</h3>
-            </div>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque suscipit erat nec tempus
-                feugiat. Phasellus eu tortor suscipit, laoreet libero quis, venenatis tellus.
-            </p>
-        </a>
+                <a href="#mellifluous" class="word-card">
+                    <div class="word-header">
+                        <h3>Mellifluous</h3>
+                    </div>
+                    <p>(of a voice or words) Sweet or musical; pleasant to hear.</p>
+                </a>
+
+                <a href="#ubiquitous" class="word-card">
+                    <div class="word-header">
+                        <h3>Ubiquitous</h3>
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque suscipit erat nec tempus
+                        feugiat. Phasellus eu tortor suscipit, laoreet libero quis, venenatis tellus.
+                    </p>
+                </a>
+            }
+            else
+            {
+                @* Console.WriteLine("More"); *@
+                @foreach (Word word in words)
+                {
+                    <a @onclick="(() => EditWord(word.Id) )" class="word-card">
+                        <div class="word-header">
+                            <h3>@word.Term</h3>
+                        </div>
+                        <p>@word.Definition</p>
+                    </a>
+                }
+            }
+        }
+        
     </div>
 </div>
 
@@ -49,18 +75,28 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
 
+    void CreateWord()
+    {
+        NavigationManager.NavigateTo("/editwordpage");
+    }
+
+    void EditWord(int id)
+    {
+        Console.WriteLine(id);
+        NavigationManager.NavigateTo($"/editwordpage/{id}");
+    }
+
+    List<Word>? words;
+
     protected override async Task OnInitializedAsync()
     {
-        var user = (await AuthState).User;
-        if (user.Identity is not null)
+        var response = await Http.GetFromJsonAsync<List<Word>>("api/word");
+
+        if(response != null)
         {
-            if (!user.Identity.IsAuthenticated)
-            {
-                NavigationManager.NavigateTo("/homepage");
-            }
+            words = response;
         }
 
-        await base.OnInitializedAsync();
     }
 
 }

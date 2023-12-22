@@ -16,6 +16,6 @@ namespace Words.Server.Data
         // Table Will be created during imigrations
         public DbSet<User> Users { get; set; }
 
-        //public DbSet<Word> Weath { get; set; }
+        public DbSet<Word> Words { get; set; }
     }
 }
