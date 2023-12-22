@@ -44,14 +44,23 @@
 
     string loginFormWarning = "";
 
+    /// <summary>
+    /// Checks if the user has been authenticated before showing page
+    /// If authenticated then redirect user to a different page (words page)
+    /// </summary>
+    /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
         var user = (await AuthState).User;
-        if(user.Identity is not null)
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
         {
-            if (user.Identity.IsAuthenticated)
+            var userIdClaim = user.FindFirst("Sub");
+
+            if (userIdClaim != null)
             {
-                NavigationManager.NavigateTo("/wordspage");
+                var userId = userIdClaim.Value;
+
+                NavigationManager.NavigateTo($"/wordspage/{userId}");
             }
         }
 

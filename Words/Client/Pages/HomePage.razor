@@ -30,15 +30,17 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Comment out later
-        // await LocalStorage.RemoveItemAsync("token");
 
         var user = (await AuthState).User;
-        if (user.Identity is not null)
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
         {
-            if (user.Identity.IsAuthenticated)
+            var userIdClaim = user.FindFirst("Sub");
+
+            if (userIdClaim != null)
             {
-                NavigationManager.NavigateTo("/wordspage");
+                var userId = userIdClaim.Value;
+
+                NavigationManager.NavigateTo($"/wordspage/{userId}");
             }
         }
 
