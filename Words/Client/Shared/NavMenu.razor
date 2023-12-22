@@ -4,7 +4,7 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/wordspage">Words</a>
+        <a class="navbar-brand" style="cursor: pointer" @onclick="GoToWordsPage">Words</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -16,13 +16,13 @@
                         <a class="nav-link"  href="/registerpage">Register</a>
                     </NotAuthorized>
                     <Authorized>
-                        <a class="nav-link"  href="/editwordpage">Create Word</a>
+                        <a class="nav-link" style="cursor: pointer"  @onclick="GoToCreateWordPage" >Create Word</a>
                     </Authorized>
                  
                 </AuthorizeView>                   
             </div>
             <AuthorizeView>
-                <a style="color:blue; cursor:pointer;" class="nav-link" @onclick="HandleClick">Logout</a>
+                <a style="color:blue; cursor:pointer;" class="nav-link" @onclick="Logout">Logout</a>
             </AuthorizeView>
             
         </div>
@@ -32,7 +32,11 @@
 
 @code
 {
-    async Task HandleClick()
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; }
+
+
+    async Task Logout()
     {
         // Loging out
         // Remove the token from local storage
@@ -41,5 +45,59 @@
 
         // Go to root page (Start over)
         NavigationManager.NavigateTo("/");
+    }
+
+    async Task GoToCreateWordPage()
+    {
+        var user = (await AuthState).User;
+        if (user.Identity is not null)
+        {
+            if (user.Identity.IsAuthenticated)
+            {
+                var userIdClaim = user.FindFirst("Sub");
+                if (userIdClaim != null)
+                {
+                    var userId = userIdClaim.Value;
+                    // Use the user ID as needed
+                    Console.WriteLine($"User ID: {userId}");
+
+                    // You can now navigate to the "/wordspage" or perform other actions
+                    NavigationManager.NavigateTo($"/editwordpage/{userId}");
+                }
+                else
+                {
+                    Console.WriteLine($"fail");
+                }
+                //NavigationManager.NavigateTo("/wordspage");
+
+            }
+            else
+            {
+                Console.WriteLine($"no auth");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"no identity");
+        }
+    }
+
+    async Task GoToWordsPage()
+    {
+        var user = (await AuthState).User;
+        if (user.Identity is not null && user.Identity.IsAuthenticated)
+        {
+                var userIdClaim = user.FindFirst("Sub");
+
+                if (userIdClaim != null)
+                {
+                    var userId = userIdClaim.Value;
+
+                    Console.WriteLine($"User ID: {userId}");
+
+                    
+                    NavigationManager.NavigateTo($"/wordspage/{userId}");
+                }  
+        }
     }
 }
