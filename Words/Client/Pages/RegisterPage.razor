@@ -23,7 +23,7 @@
         <div class="form-background">
             <h2>Register</h2>
                    
-                  <EditForm Model="userRegisterDto" OnValidSubmit="HandleSubmit">
+                  <EditForm Model="userRegisterDto" OnValidSubmit="RegisterUser">
                     <p> @userNameExistsWarning</p>
                     <DataAnnotationsValidator/>
                     <div class="mb-3">
@@ -68,8 +68,8 @@
         var user = (await AuthState).User;
         if (user.Identity is not null && user.Identity.IsAuthenticated)
         {
+            // Get the user id from claim
             var userIdClaim = user.FindFirst("Sub");
-
             if (userIdClaim != null)
             {
                 var userId = userIdClaim.Value;
@@ -83,7 +83,7 @@
 
     
 
-    async Task HandleSubmit()
+    async Task RegisterUser()
     {
         var users = await Http.GetFromJsonAsync<List<ApplicationUser>>("api/user");
 
@@ -96,10 +96,8 @@
             else
             { // Create new user
                 
-                // Console.WriteLine("Create the user");
-                // Console.WriteLine(userRegisterDto.Username);
                 var currentUser = await Http.PostAsJsonAsync<UserRegisterDto>("api/user/register", userRegisterDto);
-                NavigationManager.NavigateTo("loginpage");
+                NavigationManager.NavigateTo("loginpage"); // Can login
             }
         }
     }

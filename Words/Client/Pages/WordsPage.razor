@@ -55,7 +55,6 @@
             }
             else
             {
-                @* Console.WriteLine("More"); *@
                 @foreach (UserWord word in words)
                 {
                     <a @onclick="(() => EditWord(word.Id) )" class="word-card">
@@ -72,8 +71,6 @@
 </div>
 
 @code {
-    // [CascadingParameter]
-    // public Task<AuthenticationState> AuthState { get; set; }
     [Parameter]
     public int? UserId { get; set; }
 
@@ -90,39 +87,19 @@
 
     List<UserWord>? words;
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     var response = await Http.GetFromJsonAsync<List<UserWord>>("api/word");
-
-    //     if(response != null)
-    //     {
-    //         words = response;
-    //     }
-
-    // }
 
     protected override async Task OnParametersSetAsync()
     {
         if (UserId is not null)
         {
-
+            // Get the users words 
             var response = await Http.GetFromJsonAsync<List<UserWord>>($"api/word/{UserId}");
-
-
             if (response is not null)
             {
                 words = response;
-                Console.WriteLine("Done");
             }
 
         }
-
-        //return base.OnParametersSetAsync();
     }
-
-    // protected override async void OnParametersSet()
-    // {
-        
-    // }
 
 }

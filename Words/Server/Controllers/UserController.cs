@@ -37,7 +37,7 @@ namespace Words.Server.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ApplicationUser>> GetAllUser(int id)
+        public async Task<ActionResult<ApplicationUser>> GetUser(int id)
         {
 
             var userWithWords = await _context.Users.FindAsync(id);
@@ -54,30 +54,16 @@ namespace Words.Server.Controllers
 
         }
 
-        //public UserController(IConfiguration configuration)
-        //{
-        //    _configuration = configuration;
-        //}
-
         [HttpPost("register")]
         public async Task<ActionResult<ApplicationUser>> CreateUser(UserRegisterDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            // Set user 
-            //Console.WriteLine(passwordHash.ToString(), passwordSalt.ToString());
             ApplicationUser user = new ApplicationUser { };
-
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < passwordHash.Length; i++)
-            {
-                builder.Append(passwordHash[i].ToString("x2"));
-            }
-            //Console.WriteLine(builder.ToString());
-
             user.Username = request.Username;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
@@ -96,7 +82,6 @@ namespace Words.Server.Controllers
 
                 if (userNameExists)
                 {
-                    //return Ok((false));
                     ApplicationUser user = userList.First();
                     if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
                     {
@@ -121,6 +106,11 @@ namespace Words.Server.Controllers
             return BadRequest("Invalid username");
         }
 
+        /// <summary>
+        /// Creates a unique token for identifying and authenticating the user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         private string CreateToken(ApplicationUser user) 
         {
             // Claims describe the user that has been authenticated
@@ -152,6 +142,12 @@ namespace Words.Server.Controllers
             return jwt;
         }
 
+        /// <summary>
+        /// Creates a hash and salt for the users password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="passwordHash"></param>
+        /// <param name="passwordSalt"></param>
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt) 
         { 
             using( var hmac = new HMACSHA512())
@@ -161,6 +157,13 @@ namespace Words.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Checks if the users password is correct
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="userPasswordHash"></param>
+        /// <param name="userPasswordSalt"></param>
+        /// <returns>True if correct</returns>
         private bool VerifyPasswordHash(string password, byte[] userPasswordHash, byte[] userPasswordSalt)
         {
             using (var hmac = new HMACSHA512(userPasswordSalt))

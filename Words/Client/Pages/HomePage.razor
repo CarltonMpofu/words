@@ -21,21 +21,25 @@
     void ToLoginPage()
     {
         NavigationManager.NavigateTo("loginpage");
-    }
+    } 
 
     void ToRegisterPage()
     {
         NavigationManager.NavigateTo("registerpage");
-    }
+    } 
 
+    /// <summary>
+    /// Checks if the user has been authenticated before showing page
+    /// If authenticated then redirect user to a different page (words page)
+    /// </summary>
+    /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-
         var user = (await AuthState).User;
         if (user.Identity is not null && user.Identity.IsAuthenticated)
         {
+            // Get the user id from claim
             var userIdClaim = user.FindFirst("Sub");
-
             if (userIdClaim != null)
             {
                 var userId = userIdClaim.Value;

@@ -15,7 +15,7 @@
         <div class="form-background">
             <h2>Login</h2> 
 
-                <EditForm Model="userDto" OnValidSubmit="HandleSubmit">
+                <EditForm Model="userDto" OnValidSubmit="LoginUser">
                     <p> @loginFormWarning</p>
                     <DataAnnotationsValidator />
                     <div class="mb-3">
@@ -54,8 +54,8 @@
         var user = (await AuthState).User;
         if (user.Identity is not null && user.Identity.IsAuthenticated)
         {
+            // Get the user id from claim
             var userIdClaim = user.FindFirst("Sub");
-
             if (userIdClaim != null)
             {
                 var userId = userIdClaim.Value;
@@ -67,13 +67,14 @@
         await base.OnInitializedAsync();
     }
 
-    async Task HandleSubmit()
+    async Task LoginUser()
     {
         var response = await Http.PostAsJsonAsync<UserLoginDto>("api/user/login", userDto);
 
-
         if (!response.IsSuccessStatusCode)
-        { // Not successfull
+        { 
+            // Not successfull
+            // Manage errors
 
             if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
@@ -94,18 +95,16 @@
             }
         }
         else
-        {
+        {// Login successfull
+
             // Get the token and id from response
             var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>();
-
             if (loginResponse != null)
-            {
+            { 
                 var token = loginResponse.Token;
                 var userId = loginResponse.UserId;
 
-                // Console.WriteLine(token);
-                // Console.WriteLine(userId);
-
+                // Save token to local storage
                 await LocalStorage.SetItemAsync("token", token);
                 await AuthStateProvider.GetAuthenticationStateAsync();
 

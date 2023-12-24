@@ -45,7 +45,7 @@ namespace Words.Server.Controllers
         }
 
         [HttpGet("{userId}/{wordId}")]
-        public async Task<ActionResult<UserWord>> GetAllWords(int userId, int wordId)
+        public async Task<ActionResult<UserWord>> GetWord(int userId, int wordId)
         {
 
             var userWithWords = await _context.Users.FindAsync(userId);

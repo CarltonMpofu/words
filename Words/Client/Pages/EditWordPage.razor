@@ -44,12 +44,12 @@
     async Task HandleSubmit()
     {
         if (WordId is null)
-        {
+        { // Add the word
             word.UserId = UserId;
             await Http.PostAsJsonAsync<UserWord>("api/word/", word);
         }
         else
-        {
+        { // Update the word
             await Http.PutAsJsonAsync<UserWord>($"api/word/{WordId}", word);
         }
 

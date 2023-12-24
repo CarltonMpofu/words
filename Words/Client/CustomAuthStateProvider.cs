@@ -14,6 +14,10 @@ namespace Words.Client
             _localStorage = localStorage;
         }
 
+        /// <summary>
+        /// Authenticate the user using the token in local storage
+        /// </summary>
+        /// <returns></returns>
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             string token = await _localStorage.GetItemAsStringAsync("token");
