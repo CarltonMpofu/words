@@ -1,0 +1,81 @@
+﻿@page "/advicepage"
+@using System.Text.Json
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@* @attribute [Authorize] *@
+
+<div class="flex-container">
+    <div class="card-background">
+            <div>
+                <h1>Words</h1>
+                <hr />
+            </div>
+            <div class="quote-container">
+                @if(adviceSlip != null)
+                {
+                <h2>Advice #@adviceSlip.Slip.Id</h2>
+                <p id="quote-text">@adviceSlip.Slip.Advice</p>
+                <button @onclick="GetRandomQuote">Get Random Advice</button>
+                }
+                else
+                {
+                    <h2>Random Advice</h2>
+                    <p id="quote-text">Click the button for a new one!</p>
+                    <button  @onclick="GetRandomQuote">Get Random Advice</button>
+                
+                }
+        </div>
+            
+
+        </div>
+</div>
+
+@code
+{
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; }
+
+    private AdviceSlip? adviceSlip;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Redirect the user to the home route if not authenticated
+        var user = (await AuthState).User;
+        if (user.Identity is not null && !user.Identity.IsAuthenticated)
+        {
+            
+           NavigationManager.NavigateTo("/");
+            
+        }
+
+        await base.OnInitializedAsync();
+    }
+
+   
+    async void GetRandomQuote()
+    {
+        try
+        {
+            adviceSlip = await Http.GetFromJsonAsync<AdviceSlip>("https://api.adviceslip.com/advice");
+ 
+        }
+        catch (Exception ex)
+        {
+            // Handle errors gracefully
+            Console.Error.WriteLine(ex.Message);
+        }
+
+
+    }
+
+    public class AdviceSlip
+    {
+        public Slip Slip { get; set; }
+    }
+
+    public class Slip
+    {
+        public int Id { get; set; }
+        public string Advice { get; set; }
+    }
+}

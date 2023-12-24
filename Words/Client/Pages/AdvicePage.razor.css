@@ -1,0 +1,75 @@
+﻿
+/* Center */
+.flex-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.card-background {
+    max-width: 450px;
+    width: 95%;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+/* Logo plus the line */
+
+h1 {
+    font-family: 'Rubik Mono One', monospace;
+    letter-spacing: 5px;
+    font-size: 3.5rem;
+    font-style: italic;
+    text-align: center;
+    color: white;
+}
+
+hr {
+    height: 10px;
+    width: 100%;
+    background-color: #F0ECE5;
+    margin-bottom: 30px;
+    border-radius: 10px;
+}
+
+/* Qoute */
+
+.quote-container {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+   
+}
+
+
+h2 {
+    color: #3498db;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+p {
+    color: #31304D;
+    font-size: 1.3em;
+    line-height: 1.4;
+    letter-spacing: 1px;
+}
+
+button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+    button:hover {
+        background-color: #2980b9;
+    }
