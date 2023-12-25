@@ -98,7 +98,7 @@
         {// Login successfull
 
             // Get the token and id from response
-            var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>();
+            var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
             if (loginResponse != null)
             { 
                 var token = loginResponse.Token;

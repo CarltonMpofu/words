@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Words.Server.Data;
+using Words.Server.Shared.Settings;
 using Words.Shared;
 
 namespace Words.Server.Controllers
@@ -18,12 +20,13 @@ namespace Words.Server.Controllers
         // Get access to the database via dependency injection
         private readonly DataContext _context;
 
-        //public IConfiguration _configuration;
+        private readonly TokenSettings _tokenSettings;
 
-        public UserController(DataContext context)
+        public UserController(DataContext context, IOptions<TokenSettings> tokenSettings)
         { // Inject the database context
 
             _context = context;
+            _tokenSettings = tokenSettings.Value;
         }
 
        
@@ -71,7 +74,7 @@ namespace Words.Server.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<LoginResponse>> Login(UserLoginDto request)
+        public async Task<ActionResult<LoginResponseDto>> Login(UserLoginDto request)
         {
             var users = await _context.Users.ToListAsync();
 
@@ -92,7 +95,7 @@ namespace Words.Server.Controllers
 
                         string token = CreateToken(user);
 
-                        var response = new LoginResponse
+                        var response = new LoginResponseDto
                         {
                             Token = token,
                             UserId = user.Id
@@ -120,7 +123,7 @@ namespace Words.Server.Controllers
                 new Claim("Sub", user.Id.ToString())
             };
 
-            string tokenSecret = "This is a token. What is a token. It is a secret I cannot tell you. Sorry.";
+            string tokenSecret = _tokenSettings.TokenKey;
 
             // create token
             //var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(

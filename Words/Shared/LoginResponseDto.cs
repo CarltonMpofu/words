@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Words.Shared
 {
-    public class LoginResponse
+    public class LoginResponseDto
     {
         public string Token { get; set; } = string.Empty;
         public int UserId { get; set; }
