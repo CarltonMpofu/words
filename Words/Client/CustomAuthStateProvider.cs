@@ -6,7 +6,7 @@ namespace Words.Client
 {
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {
-        public ILocalStorageService _localStorage { get; }
+        private ILocalStorageService _localStorage { get; }
 
         // Inject local storage
         public CustomAuthStateProvider(ILocalStorageService localStorage)

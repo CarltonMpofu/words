@@ -22,6 +22,7 @@ namespace Words.Server.Controllers
 
 
         [HttpGet("{userId}")]
+        [Authorize]
         public async Task<ActionResult<List<UserWord>>> GetAllWords(int userId)
         {
 
@@ -46,6 +47,7 @@ namespace Words.Server.Controllers
         }
 
         [HttpGet("{userId}/{wordId}")]
+        [Authorize]
         public async Task<ActionResult<UserWord>> GetWord(int userId, int wordId)
         {
 
@@ -71,6 +73,7 @@ namespace Words.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<string>> AddWord(UserWord word)
         {
             _context.UserWords.Add(word);
@@ -81,6 +84,7 @@ namespace Words.Server.Controllers
 
 
         [HttpPut("{wordId}")]
+        [Authorize]
         public async Task<ActionResult<UserWord>> UpdateWord(int wordId, UserWord wordUpdate)
         {
             var result = await _context.UserWords.FindAsync(wordId);
@@ -100,6 +104,7 @@ namespace Words.Server.Controllers
 
         
         [HttpDelete("{wordId}")]
+        [Authorize]
         public async Task<ActionResult<bool>> DeleteWord(int wordId)
         {
             var result = await _context.UserWords.FindAsync(wordId);
