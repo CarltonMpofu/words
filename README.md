@@ -41,11 +41,8 @@ To run the Words Web App locally, follow these steps:
 | Images | Images |
 | --- | --- |
 | ![](screenshots/home.png) | ![](screenshots/login.png) |
-
 | ![](screenshots/register.png) | ![](screenshots/words.png) |
-
 | ![](screenshots/edit.png) | ![](screenshots/advice.png) |
-
 ![](screenshots/advice_2.png)
 
 
