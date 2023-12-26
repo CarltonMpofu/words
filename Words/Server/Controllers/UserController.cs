@@ -80,7 +80,7 @@ namespace Words.Server.Controllers
 
             if (users is not null)
             {
-                var userList = users.Where((c) => c.Username.Equals(request.UserName));
+                var userList = users.Where((c) => c.Username.ToLower().Equals(request.UserName.ToLower()));
                 bool userNameExists = userList.Count() != 0;
 
                 if (userNameExists)

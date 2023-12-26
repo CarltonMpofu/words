@@ -10,22 +10,18 @@
 
 /* Logo plus the line */
 
-h1 {
-    font-family: 'Rubik Mono One', monospace;
+#words {
     letter-spacing: 5px;
     font-size: 3.5rem;
-    font-style: italic;
-    text-align: center;
-    color: white;
 }
 
-hr {
+#words-line {
     height: 10px;
     width: 34rem;
-    background-color: #F0ECE5;
     margin-bottom: 20px;
     border-radius: 10px;
 }
+
 
 /* Add Word button */
 
@@ -50,22 +46,18 @@ hr {
 .word-card {
     background-color: #fff;
     border-radius: 8px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     padding: 20px;
     margin: 10px;
     width: 40%;
     box-sizing: border-box;
     transition: transform 0.2s ease-in-out;
-    /*overflow: hidden;  Ensure the background color doesn't extend beyond the border */
-    text-decoration: none; /* Remove default anchor underline */
-    /*color: inherit;  Inherit text color from parent */
 }
 
 .word-header {
     background-color: #3498db;
     color: #fff;
     padding: 10px;
-    border-radius: 8px 8px 0 0; /* Rounded corners only at the top */
+    border-radius: 8px 8px 0 0; 
     margin-bottom: 5px
 }
 

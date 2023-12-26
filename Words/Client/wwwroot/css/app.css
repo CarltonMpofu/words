@@ -111,3 +111,57 @@ a, .btn-link {
         content: var(--blazor-load-percentage-text, "Loading");
     }
 
+h1 {
+    font-family: 'Rubik Mono One', monospace;
+    letter-spacing: 10px;
+    font-size: 7rem;
+    font-style: italic;
+    text-align: center;
+    color: white;
+}
+
+hr {
+    border: none;
+    height: 20px;
+    width: 100%;
+    background-color: #F0ECE5;
+    margin-bottom: 30px;
+}
+
+#words:hover {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    25%, 75% {
+        transform: translateX(-10px);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+}
+
+
+#words-line:hover {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% {
+        background-color: #F0ECE5; /* Background color */
+    }
+
+    25%, 75% {
+        background-color: #4CB9E7; /* Blink color */
+    }
+}
+
+a
+{
+    text-decoration: none;
+}

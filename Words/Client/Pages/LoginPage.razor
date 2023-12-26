@@ -9,8 +9,8 @@
 
     <div class="card-background">
         <div>
-            <h1>Words</h1>
-            <hr />
+            <h1 id="words">Words</h1>
+            <hr id="words-line" />
         </div>
         <div class="form-background">
             <h2>Login</h2> 
@@ -40,7 +40,7 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
 
-    UserLoginDto userDto = new UserLoginDto { UserName = "Mika", Password="123456789" };
+    UserLoginDto userDto = new UserLoginDto { /* UserName = "Mika", Password="123456789" */ };
 
     string loginFormWarning = "";
 

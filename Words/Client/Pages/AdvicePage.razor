@@ -7,8 +7,8 @@
 <div class="flex-container">
     <div class="card-background">
             <div>
-                <h1>Words</h1>
-                <hr />
+                <h1 id="words">Words</h1>
+                <hr id="words-line" />
             </div>
             <div class="quote-container">
                 @if(adviceSlip != null)
@@ -55,7 +55,7 @@
     {
         try
         {
-            adviceSlip = await Http.GetFromJsonAsync<AdviceSlip>("https://api.adviceslip.com/advice");
+            adviceSlip = await Http.GetFromJsonAsync<AdviceSlip>("api/word/getrandomadvice");
  
         }
         catch (Exception ex)
@@ -63,18 +63,5 @@
             // Handle errors gracefully
             Console.Error.WriteLine(ex.Message);
         }
-
-
-    }
-
-    public class AdviceSlip
-    {
-        public Slip Slip { get; set; }
-    }
-
-    public class Slip
-    {
-        public int Id { get; set; }
-        public string Advice { get; set; }
-    }
+    } 
 }

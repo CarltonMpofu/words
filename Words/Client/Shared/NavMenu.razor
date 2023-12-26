@@ -60,7 +60,7 @@
                 {
                     var userId = userIdClaim.Value;
                     // Use the user ID as needed
-                    Console.WriteLine($"User ID: {userId}");
+                    // Console.WriteLine($"User ID: {userId}");
 
                     // You can now navigate to the "/wordspage" or perform other actions
                     NavigationManager.NavigateTo($"/editwordpage/{userId}");
@@ -88,17 +88,21 @@
         var user = (await AuthState).User;
         if (user.Identity is not null && user.Identity.IsAuthenticated)
         {
-                var userIdClaim = user.FindFirst("Sub");
+            var userIdClaim = user.FindFirst("Sub");
 
-                if (userIdClaim != null)
-                {
-                    var userId = userIdClaim.Value;
+            if (userIdClaim != null)
+            {
+                var userId = userIdClaim.Value;
 
-                    Console.WriteLine($"User ID: {userId}");
+                // Console.WriteLine($"User ID: {userId}");
 
-                    
-                    NavigationManager.NavigateTo($"/wordspage/{userId}");
-                }  
+
+                NavigationManager.NavigateTo($"/wordspage/{userId}");
+            }  
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/");
         }
     }
 }

@@ -15,20 +15,13 @@
 
 /* Logo plus the line */
 
-h1 {
-    font-family: 'Rubik Mono One', monospace;
+#words {
     letter-spacing: 5px;
     font-size: 3.5rem;
-    font-style: italic;
-    text-align: center;
-    color: white;
 }
 
-hr {
+#words-line {
     height: 10px;
-    width: 100%;
-    background-color: #F0ECE5;
-    margin-bottom: 30px;
     border-radius: 10px;
 }
 

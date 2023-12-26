@@ -17,8 +17,8 @@
 
     <div class="card-background">
         <div>
-            <h1>Words</h1>
-            <hr />
+            <h1 id="words">Words</h1>
+            <hr id="words-line" />
         </div>
         <div class="form-background">
             <h2>Register</h2>
@@ -54,7 +54,7 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
 
-    UserRegisterDto userRegisterDto = new UserRegisterDto { Username = "Carlton", Password = "12345678", Password2 = "12345678" };
+    UserRegisterDto userRegisterDto = new UserRegisterDto { /* Username = "Carlton", Password = "12345678", Password2 = "12345678" */ };
 
     string userNameExistsWarning = "";
 
@@ -89,7 +89,7 @@
 
         if(users is not null)
         {
-            bool userNameExists = users.Where((c) => c.Username.Equals(userRegisterDto.Username)).Count() != 0;
+            bool userNameExists = users.Where((c) => c.Username.ToLower().Equals(userRegisterDto.Username.ToLower())).Count() != 0;
 
             if(userNameExists)
                 userNameExistsWarning = "Username already exists";

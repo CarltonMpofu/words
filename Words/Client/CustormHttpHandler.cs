@@ -18,7 +18,8 @@ namespace Words.Client
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if(request.RequestUri.AbsolutePath.ToLower().Contains("login") ||
-               request.RequestUri.AbsolutePath.ToLower().Contains("register"))
+               request.RequestUri.AbsolutePath.ToLower().Contains("register") ||
+               request.RequestUri.AbsolutePath.ToLower().Contains("getrandomadvice") )
             { // Dont do anything
                 return await base.SendAsync(request, cancellationToken);
             }
@@ -26,7 +27,7 @@ namespace Words.Client
             // Bypass header and add the authorization header
             string token = await _localStorage.GetItemAsStringAsync("token");
 
-            Console.WriteLine(token);
+            //Console.WriteLine(token);
 
             if (!string.IsNullOrEmpty(token))
             {

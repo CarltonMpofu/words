@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Net.Http;
 using Words.Server.Data;
 using Words.Shared;
 
@@ -14,10 +15,16 @@ namespace Words.Server.Controllers
     {
 
         public readonly DataContext _context;
-        public WordController(DataContext context)
+
+        private readonly IHttpClientFactory _httpClientFactory;
+
+
+
+        public WordController(DataContext context, IHttpClientFactory httpClientFactory)
         { // inject database context
 
             _context = context;
+            _httpClientFactory = httpClientFactory;
         }
 
 
@@ -70,6 +77,23 @@ namespace Words.Server.Controllers
 
             return BadRequest("User not found");
 
+        }
+
+        [HttpGet("getrandomadvice")]
+        public async Task<ActionResult<AdviceSlip>> GetRandomAdvice()
+        {
+            try
+            {
+                var httpClient = _httpClientFactory.CreateClient();
+                var adviceSlip = await httpClient.GetFromJsonAsync<AdviceSlip>("https://api.adviceslip.com/advice");
+                return adviceSlip;
+            }
+            catch (Exception ex)
+            {
+                // Handle errors gracefully
+                Console.Error.WriteLine(ex.Message);
+                return BadRequest("Failed to get random advice");
+            }
         }
 
         [HttpPost]

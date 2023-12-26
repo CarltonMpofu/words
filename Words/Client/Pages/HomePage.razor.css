@@ -11,23 +11,6 @@
     text-align: center;
 }
 
-/* Logo plus the line */
-
-h1 {
-    font-family: 'Rubik Mono One', monospace;
-    letter-spacing: 10px;
-    font-size: 7rem;
-    font-style: italic;
-}
-
-hr {
-    height: 20px;
-    width: 100%;
-    background-color: #F0ECE5;
-    margin-bottom: 30px;
-}
-
-
 
 /* Buttons */
 
