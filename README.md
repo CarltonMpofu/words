@@ -32,12 +32,12 @@ Welcome to the Words Web App! This is a Blazor WebAssembly application that allo
 
 To run the Words Web App locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/words-web-app.git`
-2. Navigate to the project directory: `cd words-web-app`
+1. Clone the repository: `git clone https://github.com/your-username/words.git`
+2. Navigate to the project directory: `cd words`
 3. Open the solution in your preferred IDE (e.g., Visual Studio, Visual Studio Code).
 4. Build and run the application.
 
-### Screenshot
+### Screenshots
 | Images | Images |
 | --- | --- |
 | ![](screenshots/home.png) | ![](screenshots/login.png) |
