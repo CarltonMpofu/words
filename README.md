@@ -6,6 +6,7 @@ Welcome to the Words Web App! This is a Blazor WebAssembly application that allo
 
 - [Features](#features)
 - [Technologies Used](#technologies-used)
+- [Future Plans](#future-plans)
 - [Getting Started](#getting-started)
 - [Screenshots](#getting-started)
 
@@ -27,6 +28,10 @@ Welcome to the Words Web App! This is a Blazor WebAssembly application that allo
 - **HTML/CSS:** The foundation for structuring and styling the web pages.
 
 - **Bootstrap:** Used for responsive and visually appealing design components.
+
+### Future Plans
+- Add a way for users to practice. Via flashcards or multiple choice.
+- Add some kind of ranking method (Maybe).
 
 ### Getting Started
 
